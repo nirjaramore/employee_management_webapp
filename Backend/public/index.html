@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Management Home</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h1 {
+      color: #1a237e;
+      margin-bottom: 40px;
+      font-size: 36px;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .button-group button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #3949ab;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 250px;
+    }
+
+    .button-group button:hover {
+      background-color: #1a237e;
+    }
+  </style>
+</head>
+<body>
+  <h1>Employee Management Portal</h1>
+
+  <div class="button-group">
+    <button onclick="location.href='create_user.html'">Create User</button>
+    <button onclick="location.href='rate_employee.html'">Rate Employee</button>
+    <button onclick="location.href='search_employee.html'">Search Employee</button>
+  </div>
+</body>
+</html>

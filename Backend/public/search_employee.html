@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Employee</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      margin-top: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #bf360c;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #bf360c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #a82700;
+    }
+
+    .results {
+      margin-top: 30px;
+    }
+
+    .card {
+      background-color: #fff3e0;
+      border-left: 6px solid #ff6f00;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      color: #e65100;
+    }
+
+    .card p {
+      margin: 5px 0;
+    }
+
+    .no-results {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Search Employee</h2>
+    <input type="text" id="searchName" placeholder="Enter employee name" required />
+    <button onclick="searchEmployee()">Search</button>
+
+    <div class="results" id="results"></div>
+  </div>
+
+  <script>
+    function searchEmployee() {
+      const name = document.getElementById('searchName').value.trim();
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = ''; // Clear previous results
+
+      if (!name) {
+        alert("Please enter a name.");
+        return;
+      }
+
+      fetch(`http://localhost:3000/search?name=${encodeURIComponent(name)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">No employee found with that name.</div>';
+          } else {
+            data.forEach(emp => {
+              const card = document.createElement('div');
+              card.className = 'card';
+              card.innerHTML = `
+                <h3>${emp.name}</h3>
+                <p><strong>Role:</strong> ${emp.role}</p>
+                <p><strong>Project:</strong> ${emp.project}</p>
+                <p><strong>Rating:</strong> ${emp.rating} ⭐</p>
+                <p><strong>Feedback:</strong> ${emp.feedback}</p>
+              `;
+              resultsDiv.appendChild(card);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          resultsDiv.innerHTML = '<div class="no-results">Something went wrong. Try again later.</div>';
+        });
+    }
+  </script>
+</body>
+</html>
